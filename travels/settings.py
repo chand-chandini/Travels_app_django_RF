@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'payments',
 ]
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
@@ -54,7 +55,6 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,12 +64,37 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# CORS settings - FIXED
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173'
+    "http://localhost:5173",
+    "http://localhost:8000",
+    "https://travelsbusbooking.netlify.app",
+    "https://bus-travel-api.onrender.com",
 ]
 
-CORS_ALLOW_ALL_ORIGINS: True
-CORS_ALLOW_CREDENTIALS: True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
 
 ROOT_URLCONF = 'travels.urls'
 
@@ -138,6 +163,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-
-RAZORPAY_KEY_ID = 'rzp_test_T0G16C53CBYOlQ'  # Replace with your test key
-RAZORPAY_KEY_SECRET = '1yHbLDa3lklQOwNLqLNmog4e'     # Replace with your test secret
+# Razorpay Configuration
+RAZORPAY_KEY_ID = 'rzp_test_T0G16C53CBYOlQ'
+RAZORPAY_KEY_SECRET = '1yHbLDa3lklQOwNLqLNmog4e'
