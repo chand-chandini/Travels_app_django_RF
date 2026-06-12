@@ -1,4 +1,3 @@
-import razorpay
 import json
 from django.conf import settings
 from django.http import JsonResponse
@@ -12,8 +11,8 @@ from rest_framework import status
 from .models import Payment
 from bookings.models import Bookings, Seat
 
-# Initialize Razorpay
-razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+# Initialize Razorpay INSIDE function to avoid import issues
+# razorpay_client will be created inside each function
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -22,6 +21,12 @@ def create_order(request):
     Create Razorpay order for payment
     """
     try:
+        # Import razorpay INSIDE the function
+        import razorpay
+        
+        # Initialize Razorpay client here
+        razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
         booking_id = request.data.get('booking_id')
         amount = request.data.get('amount')
         
@@ -77,6 +82,12 @@ def payment_callback(request):
     Verify payment after Razorpay callback
     """
     try:
+        # Import razorpay INSIDE the function
+        import razorpay
+        
+        # Initialize Razorpay client here
+        razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+        
         data = request.data
         
         # Verify payment signature
